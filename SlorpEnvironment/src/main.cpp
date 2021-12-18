@@ -3,15 +3,28 @@
 
 //Project Headers
 #include "raylib.h"
+#include "lib/structs.h"
 
 
-//system namespace for Debug
+//system namespace for Debug;
 using namespace std;
 
 int main()
 {
-	cout << "hello world" << endl;
-	system("pause>0");
+	InitWindow(1920, 1080, "Window");
+
+	SetTargetFPS(60);
+
+	while (!WindowShouldClose())
+	{
+
+		BeginDrawing();
+
+		ClearBackground(RAYWHITE);
+
+		EndDrawing();
+
+	}
 
 	return 0;
 }
