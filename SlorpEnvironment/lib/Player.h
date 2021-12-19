@@ -11,13 +11,15 @@ extern "C"
 #include "lib/rlFPCamera.h"
 }
 
-#define position translation
+//#define position translation
  
 class Player
 {
 private:
 	Settings* settings;
-	Transform transform;
+	//Transform transform;
+	Vector3 position;
+	Vector3 rotation;
 	float speed;
 	bool isCrouching;
 	bool isSprinting;
@@ -28,10 +30,11 @@ private:
 public:
 	// Constructor
 	//Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero(), Vector3 _scale = { 1.f, 1.f, 1.f });
-	Player(Settings* settings, Vector3 _position = Vector3Zero(), Quaternion _rotation = {0.f, 0.f, 0.f, 0.f}, Vector3 _scale = { 1.f, 1.f, 1.f });
+	Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero());
 
 	// Getter
-	Transform GetTransform();
+	//Transform GetTransform();
+	Vector3 GetPosition();
 	float GetSpeed();
 	bool GetIsCrouching();
 	bool GetIsSprinting();
@@ -40,10 +43,10 @@ public:
 	rlFPCamera GetCamera();
 
 	//Setter
-	void SetTransform(Transform _transform);
+	//void SetTransform(Transform _transform);
 	void SetPosition(Vector3 _position);
-	void SetRotation(Quaternion _rotation);
-	void SetScale(Vector3 _scale);
+	void SetRotation(Vector3 _rotation);
+	//void SetScale(Vector3 _scale);
 	void SetIsCrouching(bool _state);
 	void SetIsSprinting(bool _state);
 	void SetIsJumping(bool _state);

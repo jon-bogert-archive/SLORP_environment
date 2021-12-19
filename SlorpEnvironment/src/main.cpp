@@ -39,7 +39,7 @@ int main()
 	{
 		//std::cout << "X:" << controls.GetMoveAxis().x << " Y:" << controls.GetMoveAxis().y << endl;
 		player.MovePlayer(controls.GetMoveAxis());
-		//std::cout << "Player Position X:" << player.GetTransform().position.x << " Z:" << player.GetTransform().position.z << endl;
+		std::cout << "Player Position X:" << player.GetPosition().x << " Z:" << player.GetPosition().z << endl;
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);

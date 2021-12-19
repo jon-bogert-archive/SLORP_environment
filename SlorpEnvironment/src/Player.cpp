@@ -7,24 +7,25 @@ const float CAMERA_Y_OFFSET = 1.f;
 
 // Constructor
 //Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation, Vector3 _scale)
-Player::Player(Settings* _settings, Vector3 _position, Quaternion _rotation, Vector3 _scale)
+Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
 {
 	settings = _settings;
-	transform.position = _position;
-	std::cout << "set x:" << transform.position.x << " y: " << transform.position.y << endl;
-	transform.rotation = _rotation;
-	transform.scale = _scale;
+	position = _position;
+	std::cout << "set x:" << position.x << " y: " << position.y << endl;
+	rotation = _rotation;
+	//transform.scale = _scale;
 	speed = 0.f;
 	isCrouching = false;
 	isSprinting = false;
 	isJumping = false;
 	mesh = GenMeshCylinder(0.5f, 2.f, 3); // Temp
-	rlFPCameraInit(&camera, settings->GetCameraFOVY(), { transform.position.x, CAMERA_Y_OFFSET, transform.position.z });
+	rlFPCameraInit(&camera, settings->GetCameraFOVY(), { position.x, CAMERA_Y_OFFSET, position.z });
 }
 
 
 // Getter
-Transform Player::GetTransform() { return transform; }
+//Transform Player::GetTransform() { return transform; }
+Vector3 Player::GetPosition() { return position; }
 float Player::GetSpeed() { return speed; }
 bool Player::GetIsCrouching() { return isCrouching; };
 bool Player::GetIsSprinting() { return isSprinting; };
@@ -33,22 +34,22 @@ Mesh Player::GetMesh() { return mesh; }
 rlFPCamera Player::GetCamera() { return camera; }
 
 //Setter
-void Player::SetTransform(Transform _transform)
-{
-	transform = _transform;
-}
+//void Player::SetTransform(Transform _transform)
+//{
+//	transform = _transform;
+//}
 void Player::SetPosition(Vector3 _position)
 {
-	transform.position = _position;
+	position = _position;
 }
-void Player::SetRotation(Quaternion _rotation)
+void Player::SetRotation(Vector3 _rotation)
 {
-	transform.rotation = _rotation;
+	rotation = _rotation;
 }
-void Player::SetScale(Vector3 _scale)
-{
-	transform.scale = _scale;
-}
+//void Player::SetScale(Vector3 _scale)
+//{
+//	scale = _scale;
+//}
 void Player::SetIsCrouching(bool _state)
 {
 	isCrouching = _state;
@@ -85,11 +86,13 @@ void Player::MovePlayer(Vector2 axis)
 	if (!isSprinting)
 	{
 		// -= because axis values are inverted to desired directions
-		transform.position.x -= WALK_SPEED * axis.x *settings->fpsScale();
-		transform.position.z -= WALK_SPEED * axis.y *settings->fpsScale();
+		position.x -= (WALK_SPEED * axis.x);
+		position.z -= (WALK_SPEED * axis.y);
+		std::cout << "fpsScale:" << settings->fpsScale() << endl;
+
 	}
-	rlFPCameraSetPosition(&camera, { transform.position.x, transform.position.y + CAMERA_Y_OFFSET, transform.position.z });
-	std::cout << "PosX:" << transform.position.x << " PosZ:" << transform.position.z << endl;
+	rlFPCameraSetPosition(&camera, { position.x, position.y + CAMERA_Y_OFFSET, position.z });
+	std::cout << "PosX:" << position.x << " PosZ:" << position.z << endl;
 }
 
 void Player::RotatePlayer(Vector2 axis)
