@@ -6,14 +6,16 @@ const float WALK_SPEED = 0.5f; // Speed without sprinting
 const float CAMERA_Y_OFFSET = 1.f;
 
 // Constructor
-//Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation, Vector3 _scale)
 Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
 {
 	settings = _settings;
 	position = _position;
-	std::cout << "set x:" << position.x << " y: " << position.y << endl;
 	rotation = _rotation;
-	//transform.scale = _scale;
+	previosMousePosition =
+	{
+		(float)(settings->GetWindowResolution().x / 2),
+		(float)(settings->GetWindowResolution().y / 2)
+	};
 	speed = 0.f;
 	isCrouching = false;
 	isSprinting = false;
@@ -23,9 +25,10 @@ Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
 }
 
 
-// Getter
-//Transform Player::GetTransform() { return transform; }
+// Getters
+
 Vector3 Player::GetPosition() { return position; }
+Vector2 Player::GetPreviousMousePosition() { return previosMousePosition; }
 float Player::GetSpeed() { return speed; }
 bool Player::GetIsCrouching() { return isCrouching; };
 bool Player::GetIsSprinting() { return isSprinting; };
@@ -33,11 +36,7 @@ bool Player::GetIsJumping() { return isJumping; }
 Mesh Player::GetMesh() { return mesh; }
 rlFPCamera Player::GetCamera() { return camera; }
 
-//Setter
-//void Player::SetTransform(Transform _transform)
-//{
-//	transform = _transform;
-//}
+//Setters
 void Player::SetPosition(Vector3 _position)
 {
 	position = _position;
@@ -46,10 +45,10 @@ void Player::SetRotation(Vector3 _rotation)
 {
 	rotation = _rotation;
 }
-//void Player::SetScale(Vector3 _scale)
-//{
-//	scale = _scale;
-//}
+void Player::SetPreviousMousePosition(Vector2 _mousePosition)
+{
+	previosMousePosition = _mousePosition;
+}
 void Player::SetIsCrouching(bool _state)
 {
 	isCrouching = _state;
@@ -86,18 +85,17 @@ void Player::MovePlayer(Vector2 axis)
 	if (!isSprinting)
 	{
 		// -= because axis values are inverted to desired directions
-		position.x -= (WALK_SPEED * axis.x);
-		position.z -= (WALK_SPEED * axis.y);
-		std::cout << "fpsScale:" << settings->fpsScale() << endl;
-
+		position.x -= (WALK_SPEED * axis.x); //* settings->fpsScale(); // having issues atm
+		position.z -= (WALK_SPEED * axis.y); //* settings->fpsScale();
 	}
 	rlFPCameraSetPosition(&camera, { position.x, position.y + CAMERA_Y_OFFSET, position.z });
-	std::cout << "PosX:" << position.x << " PosZ:" << position.z << endl;
 }
 
-void Player::RotatePlayer(Vector2 axis)
+void Player::RotatePlayer(Vector2 rotationAxis)
 {
+	//TODO - Implement Player X Rotation
 
+	rlFPCameraRotationUpdate(&camera, rotationAxis);
 }
 
 

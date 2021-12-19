@@ -3,7 +3,9 @@
 //Project Headers
 #include "raylib.h"
 #include "raymath.h"
+#include "rlFPCamera.h"
 #include "lib/Settings.h"
+#include "lib/Player.h"
 #include <math.h>
 #include <iostream>
 
@@ -19,6 +21,7 @@ private:
 	float deadzoneMaxRight; //TODO - Getter/Setter Fn's
 
 	Vector2 moveAxis; // resulting Vector2//TODO - Getter/Setter Fn's
+	Vector2 rotationAxis;
 
 	//Move Axis Controller Inputs
 	int moveAxisController;// Controller Input // TODO - Getter/Setter Fn's
@@ -35,6 +38,7 @@ public:
 
 	//Getters
 	Vector2 GetMoveAxis();	// Returns move axis from controller or keyboard w/ throw
+	Vector2 GetRotationAxis(Player* player); // COPYRIGHT: Adapted from rlCamera by Jeffery Myers
 
 private:
 	//Internal

@@ -37,9 +37,9 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		//std::cout << "X:" << controls.GetMoveAxis().x << " Y:" << controls.GetMoveAxis().y << endl;
 		player.MovePlayer(controls.GetMoveAxis());
-		std::cout << "Player Position X:" << player.GetPosition().x << " Z:" << player.GetPosition().z << endl;
+		player.RotatePlayer(controls.GetRotationAxis(&player));
+
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);

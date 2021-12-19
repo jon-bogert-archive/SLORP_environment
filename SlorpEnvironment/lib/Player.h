@@ -20,6 +20,7 @@ private:
 	//Transform transform;
 	Vector3 position;
 	Vector3 rotation;
+	Vector2 previosMousePosition;
 	float speed;
 	bool isCrouching;
 	bool isSprinting;
@@ -33,8 +34,8 @@ public:
 	Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero());
 
 	// Getter
-	//Transform GetTransform();
 	Vector3 GetPosition();
+	Vector2 GetPreviousMousePosition();
 	float GetSpeed();
 	bool GetIsCrouching();
 	bool GetIsSprinting();
@@ -43,10 +44,9 @@ public:
 	rlFPCamera GetCamera();
 
 	//Setter
-	//void SetTransform(Transform _transform);
 	void SetPosition(Vector3 _position);
 	void SetRotation(Vector3 _rotation);
-	//void SetScale(Vector3 _scale);
+	void SetPreviousMousePosition(Vector2 _mousePosition);
 	void SetIsCrouching(bool _state);
 	void SetIsSprinting(bool _state);
 	void SetIsJumping(bool _state);

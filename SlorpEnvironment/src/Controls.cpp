@@ -16,6 +16,7 @@ Controls::Controls(Settings* _settings)
 	deadzoneMaxRight = DEADZONE_MAX; 
 
 	moveAxis = Vector2Zero(); // resulting Vector2
+	rotationAxis = Vector2Zero();
 
 	//Move Axis Controller Inputs
 	moveAxisController = 0;
@@ -43,6 +44,28 @@ Vector2 Controls::GetMoveAxis()
 		MoveButtonToAxis();
 	
 	return moveAxis;
+}
+
+Vector2 Controls::GetRotationAxis(Player* player) // COPYRIGHT: Adapted from rlCamera by Jeffery Myers
+{
+	//TODO - Implement Controller R_Stick input
+
+//Mouse
+	Vector2 mousePositionDelta = { 0.0f, 0.0f };
+	Vector2 mousePosition = GetMousePosition();
+
+	//Calculate Difference
+	mousePositionDelta.x = mousePosition.x - player->GetPreviousMousePosition().x;
+	mousePositionDelta.y = mousePosition.y - player->GetPreviousMousePosition().y;
+
+	//Store previous position for next frame
+	player->SetPreviousMousePosition(mousePosition);
+
+	//Get Axis Value from mouse delta
+	rotationAxis.x = mousePositionDelta.x / settings->GetMouseSensitivity();
+	rotationAxis.y = mousePositionDelta.y / settings->GetMouseSensitivity();
+
+	return rotationAxis;
 }
 
 float Controls::DeadZoneLeft(float input)

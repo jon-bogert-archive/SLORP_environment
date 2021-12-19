@@ -151,5 +151,9 @@ RLAPI void rlFPCameraBeginMode3D(rlFPCamera* camera);
 // end drawing with the camera
 RLAPI void rlFPCameraEndMode3D();
 
+// ============== EDITED FUNCTIONS ================
+
+void rlFPCameraRotationUpdate(rlFPCamera* camera, Vector2 rotationAxis);
+
 
 #endif //FP_CAMERA_H
