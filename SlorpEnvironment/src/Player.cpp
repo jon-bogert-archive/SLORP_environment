@@ -11,11 +11,7 @@ Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
 	settings = _settings;
 	position = _position;
 	rotation = _rotation;
-	previosMousePosition =
-	{
-		(float)(settings->GetWindowResolution().x / 2),
-		(float)(settings->GetWindowResolution().y / 2)
-	};
+	previosMousePosition = GetMousePosition();
 	speed = 0.f;
 	isCrouching = false;
 	isSprinting = false;
@@ -82,18 +78,26 @@ void Player::ToggleIsJumping()
 
 void Player::MovePlayer(Vector2 axis)
 {
+	Vector2 worldAxis = Vector2Rotate(axis, rotation.x);
 	if (!isSprinting)
 	{
 		// -= because axis values are inverted to desired directions
-		position.x -= (WALK_SPEED * axis.x); //* settings->fpsScale(); // having issues atm
-		position.z -= (WALK_SPEED * axis.y); //* settings->fpsScale();
+		position.x -= (WALK_SPEED * worldAxis.x); //* settings->fpsScale(); // having issues atm
+		position.z -= (WALK_SPEED * worldAxis.y); //* settings->fpsScale();
 	}
 	rlFPCameraSetPosition(&camera, { position.x, position.y + CAMERA_Y_OFFSET, position.z });
+	cout << "rotation X:" << rotation.x << " Y:" << rotation.y << endl;
 }
 
 void Player::RotatePlayer(Vector2 rotationAxis)
 {
-	//TODO - Implement Player X Rotation
+	rotation.x += rotationAxis.x; // X implimentation only
+
+	//Clamp X
+	if (rotation.x >= 2 * PI)
+		rotation.x -= 2 * PI;
+	else if (rotation.x < 0.)
+		rotation.x += 2 * PI;
 
 	rlFPCameraRotationUpdate(&camera, rotationAxis);
 }

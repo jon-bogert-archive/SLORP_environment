@@ -304,6 +304,7 @@ void rlFPCameraEndMode3D()
 
 void rlFPCameraRotationUpdate(rlFPCamera* camera, Vector2 rotationAxis)
 {
+
     camera->ViewAngles.x -= rotationAxis.x;
     camera->ViewAngles.y -= rotationAxis.y;
     Vector3 target = Vector3Transform((Vector3) { 0, 0, 1 }, MatrixRotateXYZ((Vector3) { camera->ViewAngles.y, -camera->ViewAngles.x, 0 }));
