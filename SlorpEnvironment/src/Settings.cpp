@@ -7,7 +7,8 @@ const int DEFAULT_TARGET_FPS = 60;
 const int REF_FPS = 60; // reference FPS for physics/animation scaling
 const string WINDOW_NAME = "SLORP";
 const float CAMERA_FOVY = 60;
-const float DEFAULT_MOUSE_SENSITIVITY = 500.f;
+const float DEFAULT_MOUSE_SENSITIVITY = 800.f;
+const float DEFAULT_STICK_SENSITIVITY = .1f;
 
 //Constructor
 Settings::Settings()
@@ -17,7 +18,7 @@ Settings::Settings()
 	windowName = WINDOW_NAME;
 	cameraFOVY = CAMERA_FOVY;
 	mouseSensitivity = DEFAULT_MOUSE_SENSITIVITY;
-
+	stickSensitivity = DEFAULT_STICK_SENSITIVITY;
 }
 
 //Getters
@@ -41,6 +42,10 @@ float Settings::GetMouseSensitivity()
 {
 	return mouseSensitivity;
 }
+float Settings::GetStickSensitivity()
+{
+	return stickSensitivity;
+}
 
 //Setters
 void Settings::SetWindowResolution(int _x, int _y)
@@ -58,6 +63,10 @@ void Settings::SetCameraFOVY(float _fovY)
 void Settings::SetMouseSensitivity(float _mouseSensitivity)
 {
 	mouseSensitivity = _mouseSensitivity;
+}
+void Settings::SetStickSensitivity(float _stickSensitivity)
+{
+	stickSensitivity = _stickSensitivity;
 }
 
 //Functions

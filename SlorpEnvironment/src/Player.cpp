@@ -3,7 +3,7 @@
 
 //Constants
 const float WALK_SPEED = 0.5f; // Speed without sprinting
-const float CAMERA_Y_OFFSET = 1.f;
+const float CAMERA_Y_OFFSET = 2.f;
 
 // Constructor
 Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
@@ -86,12 +86,16 @@ void Player::MovePlayer(Vector2 axis)
 		position.z -= (WALK_SPEED * worldAxis.y); //* settings->fpsScale();
 	}
 	rlFPCameraSetPosition(&camera, { position.x, position.y + CAMERA_Y_OFFSET, position.z });
-	cout << "rotation X:" << rotation.x << " Y:" << rotation.y << endl;
 }
 
 void Player::RotatePlayer(Vector2 rotationAxis)
 {
-	rotation.x += rotationAxis.x; // X implimentation only
+	rotation.x += rotationAxis.x;
+	//Stop Y bounce
+	if (rotation.y + rotationAxis.y < (PI / 2) && rotation.y + rotationAxis.y >(-PI / 2))
+		rotation.y += rotationAxis.y;
+	else
+		rotationAxis.y = 0.f;
 
 	//Clamp X
 	if (rotation.x >= 2 * PI)

@@ -31,7 +31,7 @@ private:
 public:
 	// Constructor
 	//Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero(), Vector3 _scale = { 1.f, 1.f, 1.f });
-	Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = { 0.f, 1.f, 0.f });
+	Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = { 0.f, 0.f, 0.f });
 
 	// Getter
 	Vector3 GetPosition();

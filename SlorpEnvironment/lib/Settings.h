@@ -15,6 +15,7 @@ private:
 	string windowName;
 	float cameraFOVY;
 	float mouseSensitivity;
+	float stickSensitivity;
 
 
 public:
@@ -26,12 +27,14 @@ public:
 	string GetWindowName();
 	float GetCameraFOVY();
 	float GetMouseSensitivity();
+	float GetStickSensitivity();
 
 	//Setters
 	void SetWindowResolution(int _x, int _y);
 	void SetTargetFrameRate(int _fps);
 	void SetCameraFOVY(float _fovY);
 	void SetMouseSensitivity(float _mouseSensitivity);
+	void SetStickSensitivity(float _stickSensitivity);
 
 	//Functions
 	float fpsScale();	// calculates scale factor between current and refernce frame rate (60fps)

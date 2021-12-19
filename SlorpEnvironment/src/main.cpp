@@ -37,6 +37,7 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); }
 		player.MovePlayer(controls.GetMoveAxis());
 		player.RotatePlayer(controls.GetRotationAxis(&player));
 
@@ -45,7 +46,8 @@ int main()
 		ClearBackground(RAYWHITE);
 		rlFPCameraBeginMode3D(&player.GetCamera());
 
-		DrawGrid(10, 1.0f);
+		DrawGrid(50, 1.0f);
+		DrawCube({ 0.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
 
 		rlFPCameraEndMode3D();
 		EndDrawing();

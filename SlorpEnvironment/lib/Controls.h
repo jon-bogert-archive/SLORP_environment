@@ -40,8 +40,10 @@ public:
 	Vector2 GetMoveAxis();	// Returns move axis from controller or keyboard w/ throw
 	Vector2 GetRotationAxis(Player* player); // COPYRIGHT: Adapted from rlCamera by Jeffery Myers
 
+	Vector2 MouseToRotationAxis(Player* player);
+
 private:
 	//Internal
-	float DeadZoneLeft(float input);
+	float DeadZone(float input, float min, float max);
 	void MoveButtonToAxis();
 };
