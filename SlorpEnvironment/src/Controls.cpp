@@ -33,8 +33,8 @@ Vector2 Controls::GetMoveAxis()
 	Vector2 tempAxis;
 	if (IsGamepadAvailable(0))
 	{
-		tempAxis.x = DeadZone(GetGamepadAxisMovement(0, 0), deadzoneMinLeft, deadzoneMaxLeft);
-		tempAxis.y = DeadZone(GetGamepadAxisMovement(0, 1), deadzoneMinLeft, deadzoneMaxLeft);
+		tempAxis.x = DeadZoneLeft(GetGamepadAxisMovement(0, 0));
+		tempAxis.y = DeadZoneLeft(GetGamepadAxisMovement(0, 1));
 		if ((tempAxis.x == 0.f) && (tempAxis.y == 0.f)) // if control stick is centered -> check keys
 			MoveButtonToAxis();
 		else
@@ -48,25 +48,9 @@ Vector2 Controls::GetMoveAxis()
 
 Vector2 Controls::GetRotationAxis(Player* player) // COPYRIGHT: Adapted from rlCamera by Jeffery Myers
 {
-	Vector2 tempAxis;
-	if (IsGamepadAvailable(0))
-	{
-		tempAxis.x = DeadZone(GetGamepadAxisMovement(0, 2), deadzoneMinRight, deadzoneMaxRight);
-		tempAxis.y = DeadZone(GetGamepadAxisMovement(0, 3), deadzoneMinRight, deadzoneMaxRight);
-		if ((tempAxis.x == 0.f) && (tempAxis.y == 0.f)) // if control stick is centered -> check mouse
-			rotationAxis = MouseToRotationAxis(player);
-		else
-			rotationAxis = { tempAxis.x * settings->GetStickSensitivity(), tempAxis.y * settings->GetStickSensitivity() }; // TODO - Stick Sensitivity
-	}
-	else
-		rotationAxis = MouseToRotationAxis(player);
+	//TODO - Implement Controller R_Stick input
 
-	return rotationAxis;
-}
-
-Vector2 Controls::MouseToRotationAxis(Player* player)
-{
-	Vector2 axis;
+//Mouse
 	Vector2 mousePositionDelta = { 0.0f, 0.0f };
 	Vector2 mousePosition = GetMousePosition();
 
@@ -78,19 +62,19 @@ Vector2 Controls::MouseToRotationAxis(Player* player)
 	player->SetPreviousMousePosition(mousePosition);
 
 	//Get Axis Value from mouse delta
-	axis.x = mousePositionDelta.x / settings->GetMouseSensitivity();
-	axis.y = mousePositionDelta.y / settings->GetMouseSensitivity();
+	rotationAxis.x = mousePositionDelta.x / settings->GetMouseSensitivity();
+	rotationAxis.y = mousePositionDelta.y / settings->GetMouseSensitivity();
 
-	return axis;
+	return rotationAxis;
 }
 
-float Controls::DeadZone(float input, float min, float max)
+float Controls::DeadZoneLeft(float input)
 {
-	if (fabs(input) < min)
+	if (fabs(input) < deadzoneMinLeft)
 	{
 		return 0.f;
 	}
-	else if (fabs(input) > max)
+	else if (fabs(input) > deadzoneMaxLeft)
 	{
 		if (input >= 0.f) { return 1.f; }
 		else { return -1.f; }
@@ -99,11 +83,11 @@ float Controls::DeadZone(float input, float min, float max)
 	{
 		if (input >= 0.f)
 		{
-			return (input - min) * (1 / (max - min));
+			return (input - deadzoneMinLeft) * (1 / (deadzoneMaxLeft - deadzoneMinLeft));
 		}
 		else
 		{
-			return (input + min) * (1 / (max - min));
+			return (input + deadzoneMinLeft) * (1 / (deadzoneMaxLeft - deadzoneMinLeft));
 		}
 	}
 }

@@ -39,8 +39,11 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+<<<<<<< HEAD
 		if (IsKeyPressed(KEY_F3)) { showDebugCam = !showDebugCam; } // Press F3 for 3rd Person Debug Camera
 		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); } // Press F11 to toggle Fullscreen
+=======
+>>>>>>> parent of 38abb49 (Corrected Y-bounce)
 		player.MovePlayer(controls.GetMoveAxis());
 		player.RotatePlayer(controls.GetRotationAxis(&player));
 
@@ -52,9 +55,13 @@ int main()
 		else
 			rlFPCameraBeginMode3D(&player.GetCamera());
 
+<<<<<<< HEAD
 		DrawGrid(50, 1.0f);
 		DrawCube({ 0.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
 		player.Draw();
+=======
+		DrawGrid(10, 1.0f);
+>>>>>>> parent of 38abb49 (Corrected Y-bounce)
 
 		rlFPCameraEndMode3D();
 		EndDrawing();
