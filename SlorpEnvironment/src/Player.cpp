@@ -16,7 +16,8 @@ Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
 	isCrouching = false;
 	isSprinting = false;
 	isJumping = false;
-	mesh = GenMeshCylinder(0.5f, 2.f, 3); // Temp
+	mesh = GenMeshCylinder(0.5f, 2.f, 8); // Temp
+	model = LoadModelFromMesh(mesh);
 	rlFPCameraInit(&camera, settings->GetCameraFOVY(), { position.x, CAMERA_Y_OFFSET, position.z });
 }
 
@@ -104,6 +105,12 @@ void Player::RotatePlayer(Vector2 rotationAxis)
 		rotation.x += 2 * PI;
 
 	rlFPCameraRotationUpdate(&camera, rotationAxis);
+}
+
+void Player::Draw()
+{
+	DrawModelEx(model, position, rotation, 0.f, Vector3One(), BLUE);
+	//DrawCube(position, 1.f, 2.f, 1.f, GREEN);
 }
 
 

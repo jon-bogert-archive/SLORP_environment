@@ -14,8 +14,8 @@ extern "C"
 }
 
 using namespace std;
-
-//Global Variables
+bool showDebugCam = false;
+void InitDebugCam(Camera3D* camera);
 
 int main()
 {
@@ -34,24 +34,40 @@ int main()
 	SetTargetFPS(settings.GetTargetFrameRate());
 	//Init Player/Camera
 	Player player(&settings);
+	Camera3D debugCam;
+	InitDebugCam(&debugCam);
 
 	while (!WindowShouldClose())
 	{
-		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); }
+		if (IsKeyPressed(KEY_F3)) { showDebugCam = !showDebugCam; } // Press F3 for 3rd Person Debug Camera
+		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); } // Press F11 to toggle Fullscreen
 		player.MovePlayer(controls.GetMoveAxis());
 		player.RotatePlayer(controls.GetRotationAxis(&player));
 
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);
-		rlFPCameraBeginMode3D(&player.GetCamera());
+		if (showDebugCam)
+			BeginMode3D(debugCam);
+		else
+			rlFPCameraBeginMode3D(&player.GetCamera());
 
 		DrawGrid(50, 1.0f);
 		DrawCube({ 0.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
+		player.Draw();
 
 		rlFPCameraEndMode3D();
 		EndDrawing();
 	}
 
 	return 0;
+}
+
+void InitDebugCam(Camera3D* camera)
+{
+	camera->position = { 10.0f, 10.0f, 10.0f };
+	camera->target = { 0.0f, 0.0f, 0.0f };
+	camera->up = { 0.0f, 1.0f, 0.0f };
+	camera->fovy = 90.0f;
+	camera->projection = CAMERA_PERSPECTIVE;
 }

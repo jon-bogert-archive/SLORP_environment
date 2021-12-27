@@ -26,6 +26,7 @@ private:
 	bool isSprinting;
 	bool isJumping;
 	Mesh mesh;
+	Model model;
 	rlFPCamera camera; // needs to be public to interact with rlFPCamera (in C)
 
 public:
@@ -59,6 +60,8 @@ public:
 	void ToggleIsJumping();
 	void MovePlayer(Vector2 axis);
 	void RotatePlayer(Vector2 axis);
+
+	void Draw();
 
 private:
 	void SetCamera(rlFPCamera camera);// use when updating player transform
