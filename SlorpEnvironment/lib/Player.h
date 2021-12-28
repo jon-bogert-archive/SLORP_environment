@@ -5,7 +5,6 @@
 #include "structs.h"
 #include "lib/Settings.h"
 #include "lib/physics.h"
-//#include "lib/Controls.h"
 #include <raymath.h>
 
 extern "C"
@@ -36,7 +35,7 @@ private:
 public:
 	// Constructor
 	//Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero(), Vector3 _scale = { 1.f, 1.f, 1.f });
-	Player(Settings* settings, Physics* _physics, Vector3 _position = Vector3Zero(), Vector3 _rotation = { 0.f, 1.f, 0.f });
+	Player(Settings* settings, Physics* _physics, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero());
 
 	// Getter
 	Vector3 GetPosition();
@@ -62,9 +61,9 @@ public:
 	void ToggleIsCrouching();
 	void ToggleIsSprinting();
 	void ToggleIsJumping();
-	void MovePlayer(Vector2 axis);
+	void MovePlayer(Vector2 axis, bool jumpInput);
 	void RotatePlayer(Vector2 axis);
-	void CheckJump();
+	void CheckJump(bool jumpInput);
 
 	void CheckGravity();
 

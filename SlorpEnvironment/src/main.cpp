@@ -43,7 +43,7 @@ int main()
 	{
 		if (IsKeyPressed(KEY_F3)) { showDebugCam = !showDebugCam; } // Press F3 for 3rd Person Debug Camera
 		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); } // Press F11 to toggle Fullscreen
-		player.MovePlayer(controls.GetMoveAxis());
+		player.MovePlayer(controls.GetMoveAxis(), controls.GetJump());
 		player.RotatePlayer(controls.GetRotationAxis(&player));
 
 		BeginDrawing();

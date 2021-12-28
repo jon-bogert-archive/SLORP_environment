@@ -81,9 +81,9 @@ void Player::ToggleIsJumping()
 	isJumping = !isJumping;
 }
 
-void Player::MovePlayer(Vector2 axis)
+void Player::MovePlayer(Vector2 axis, bool jumpInput)
 {
-	CheckJump();
+	CheckJump(jumpInput);
 	CheckGravity();
 
 	position.y += velocity.y;
@@ -100,7 +100,12 @@ void Player::MovePlayer(Vector2 axis)
 
 void Player::RotatePlayer(Vector2 rotationAxis)
 {
-	rotation.x += rotationAxis.x; // X implimentation only
+	rotation.x += rotationAxis.x;
+	//Stop Y bounce
+	if (rotation.y + rotationAxis.y < (PI / 2) && rotation.y + rotationAxis.y >(-PI / 2))
+		rotation.y += rotationAxis.y;
+	else
+		rotationAxis.y = 0.f;
 
 	//Clamp X
 	if (rotation.x >= 2 * PI)
@@ -111,9 +116,9 @@ void Player::RotatePlayer(Vector2 rotationAxis)
 	rlFPCameraRotationUpdate(&camera, rotationAxis);
 }
 
-void Player::CheckJump()
+void Player::CheckJump(bool jumpInput)
 {
-	if (!isJumping && IsKeyDown(KEY_SPACE))
+	if (!isJumping && jumpInput)
 	{
 		velocity.y = JUMP_VELOCITY;
 		isJumping = true;

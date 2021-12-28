@@ -15,6 +15,7 @@ private:
 	string windowName;
 	float cameraFOVY;
 	float mouseSensitivity;
+	float stickSensitivity;
 
 
 public:
@@ -26,6 +27,7 @@ public:
 	string GetWindowName();
 	float GetCameraFOVY();
 	float GetMouseSensitivity();
+	float GetStickSensitivity();
 
 	//Setters
 	void SetWindowResolution(int _x, int _y);
