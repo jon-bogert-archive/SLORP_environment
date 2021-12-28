@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include "structs.h"
 #include "lib/Settings.h"
+#include "lib/physics.h"
+//#include "lib/Controls.h"
 #include <raymath.h>
 
 extern "C"
@@ -17,9 +19,11 @@ class Player
 {
 private:
 	Settings* settings;
+	Physics* physics;
 	//Transform transform;
 	Vector3 position;
 	Vector3 rotation;
+	Vector3 velocity; // TODO - Implement in x & z axis
 	Vector2 previosMousePosition;
 	float speed;
 	bool isCrouching;
@@ -32,7 +36,7 @@ private:
 public:
 	// Constructor
 	//Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = Vector3Zero(), Vector3 _scale = { 1.f, 1.f, 1.f });
-	Player(Settings* settings, Vector3 _position = Vector3Zero(), Vector3 _rotation = { 0.f, 1.f, 0.f });
+	Player(Settings* settings, Physics* _physics, Vector3 _position = Vector3Zero(), Vector3 _rotation = { 0.f, 1.f, 0.f });
 
 	// Getter
 	Vector3 GetPosition();
@@ -60,6 +64,9 @@ public:
 	void ToggleIsJumping();
 	void MovePlayer(Vector2 axis);
 	void RotatePlayer(Vector2 axis);
+	void CheckJump();
+
+	void CheckGravity();
 
 	void Draw();
 

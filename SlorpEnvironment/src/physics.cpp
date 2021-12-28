@@ -1,10 +1,8 @@
 #include "lib/physics.h"
 
-static Player* player;
-static World* world;
+const float GRAVITY_DEFAULT = -3.f; // m/s^2
 
-void CheckPlayerCollsion(Player* _player, World* _world)
+Physics::Physics()
 {
-	player = _player;
-
+	gravity = GRAVITY_DEFAULT;
 }

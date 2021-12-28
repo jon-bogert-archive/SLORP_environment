@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include "lib/structs.h"
 #include "lib/Settings.h"
+#include "lib/physics.h"
 #include "lib/Player.h"
 #include "lib/Controls.h"
 
@@ -21,6 +22,7 @@ int main()
 {
 	// Initialize Game Settings
 	Settings settings;
+	Physics physics;
 	Controls controls(&settings);
 	
 
@@ -33,17 +35,14 @@ int main()
 	);
 	SetTargetFPS(settings.GetTargetFrameRate());
 	//Init Player/Camera
-	Player player(&settings);
+	Player player(&settings, &physics);
 	Camera3D debugCam;
 	InitDebugCam(&debugCam);
 
 	while (!WindowShouldClose())
 	{
-<<<<<<< HEAD
 		if (IsKeyPressed(KEY_F3)) { showDebugCam = !showDebugCam; } // Press F3 for 3rd Person Debug Camera
 		if (IsKeyPressed(KEY_F11)) { ToggleFullscreen(); } // Press F11 to toggle Fullscreen
-=======
->>>>>>> parent of 38abb49 (Corrected Y-bounce)
 		player.MovePlayer(controls.GetMoveAxis());
 		player.RotatePlayer(controls.GetRotationAxis(&player));
 
@@ -55,13 +54,10 @@ int main()
 		else
 			rlFPCameraBeginMode3D(&player.GetCamera());
 
-<<<<<<< HEAD
 		DrawGrid(50, 1.0f);
 		DrawCube({ 0.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
 		player.Draw();
-=======
 		DrawGrid(10, 1.0f);
->>>>>>> parent of 38abb49 (Corrected Y-bounce)
 
 		rlFPCameraEndMode3D();
 		EndDrawing();

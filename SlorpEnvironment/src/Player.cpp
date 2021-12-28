@@ -3,14 +3,18 @@
 
 //Constants
 const float WALK_SPEED = 0.5f; // Speed without sprinting
-const float CAMERA_Y_OFFSET = 1.f;
+const float CAMERA_Y_OFFSET = 2.f;
+const float JUMP_VELOCITY = 0.75f;
+const float JUMP_THRESHOLD = 0.1f; // point above object in which player can initiate a new jump
 
 // Constructor
-Player::Player(Settings* _settings, Vector3 _position, Vector3 _rotation)
+Player::Player(Settings* _settings, Physics* _physics, Vector3 _position, Vector3 _rotation)
 {
 	settings = _settings;
+	physics = _physics;
 	position = _position;
 	rotation = _rotation;
+	velocity = Vector3Zero();
 	previosMousePosition = GetMousePosition();
 	speed = 0.f;
 	isCrouching = false;
@@ -79,6 +83,11 @@ void Player::ToggleIsJumping()
 
 void Player::MovePlayer(Vector2 axis)
 {
+	CheckJump();
+	CheckGravity();
+
+	position.y += velocity.y;
+
 	Vector2 worldAxis = Vector2Rotate(axis, rotation.x);
 	if (!isSprinting)
 	{
@@ -87,7 +96,6 @@ void Player::MovePlayer(Vector2 axis)
 		position.z -= (WALK_SPEED * worldAxis.y); //* settings->fpsScale();
 	}
 	rlFPCameraSetPosition(&camera, { position.x, position.y + CAMERA_Y_OFFSET, position.z });
-	cout << "rotation X:" << rotation.x << " Y:" << rotation.y << endl;
 }
 
 void Player::RotatePlayer(Vector2 rotationAxis)
@@ -101,6 +109,34 @@ void Player::RotatePlayer(Vector2 rotationAxis)
 		rotation.x += 2 * PI;
 
 	rlFPCameraRotationUpdate(&camera, rotationAxis);
+}
+
+void Player::CheckJump()
+{
+	if (!isJumping && IsKeyDown(KEY_SPACE))
+	{
+		velocity.y = JUMP_VELOCITY;
+		isJumping = true;
+	}
+	else if (isJumping && position.y <= JUMP_THRESHOLD) // TODO - threshold needs to be calculated from object hitbox
+	{
+		isJumping = false;
+	}
+}
+
+void Player::CheckGravity()
+{
+	if (position.y > 0) //TODO - check ground collision properly
+	{
+		velocity.y += (physics->gravity / settings->GetTargetFrameRate()); // NOTE: physics->gravity should be -'ve // TODO - Set Framerate independent
+		cout << velocity.y << endl;
+	}
+	else if (!isJumping)
+	{
+		velocity.y = 0.f;
+		position.y = 0.f; // TODO - Needs to be calculated from hit box
+	}
+	//cout << "Position Y:" << position.y << endl;
 }
 
 void Player::Draw()

@@ -32,6 +32,9 @@ private:
 	int moveLeftKeyboard; //TODO - Getter/Setter Fn's
 	int moveRightKeyboard; //TODO - Getter/Setter Fn's
 
+	int jumpKeyboard;
+	int jumpController;
+
 public:
 	//Constructor
 	Controls(Settings* settings);
@@ -39,6 +42,8 @@ public:
 	//Getters
 	Vector2 GetMoveAxis();	// Returns move axis from controller or keyboard w/ throw
 	Vector2 GetRotationAxis(Player* player); // COPYRIGHT: Adapted from rlCamera by Jeffery Myers
+
+	bool GetJump();
 
 private:
 	//Internal

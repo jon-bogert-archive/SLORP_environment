@@ -26,6 +26,9 @@ Controls::Controls(Settings* _settings)
 	moveDownKeyboard = KEY_S;
 	moveLeftKeyboard = KEY_A;
 	moveRightKeyboard = KEY_D;
+
+	jumpKeyboard = KEY_SPACE;
+	jumpController = GAMEPAD_BUTTON_RIGHT_FACE_DOWN; // A Button
 }
 
 Vector2 Controls::GetMoveAxis()
@@ -66,6 +69,14 @@ Vector2 Controls::GetRotationAxis(Player* player) // COPYRIGHT: Adapted from rlC
 	rotationAxis.y = mousePositionDelta.y / settings->GetMouseSensitivity();
 
 	return rotationAxis;
+}
+
+bool Controls::GetJump()
+{
+	if (IsKeyDown(jumpKeyboard) || IsGamepadButtonDown(0, jumpController))
+		return true;
+	else
+		return false;
 }
 
 float Controls::DeadZoneLeft(float input)
