@@ -1,3 +1,4 @@
+#include "pch/pch.h"
 #include "lib/Settings.h"
 
 //Default Constants

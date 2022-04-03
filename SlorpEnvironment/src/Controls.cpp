@@ -1,4 +1,5 @@
 //Class header
+#include "pch/pch.h"
 #include "lib/Controls.h"
 
 //Default Values
