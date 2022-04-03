@@ -28,100 +28,102 @@
 *
 **********************************************************************************************/
 
-#pragma once
-#include "pch/pch.h"
+
+#ifndef FP_CAMERA_H
+#define FP_CAMERA_H
+
 #include "raylib.h"
 #include "raymath.h"
 
 typedef enum
 {
-	MOVE_FRONT = 0,
-	MOVE_BACK,
-	MOVE_RIGHT,
-	MOVE_LEFT,
-	MOVE_UP,
-	MOVE_DOWN,
-	TURN_LEFT,
-	TURN_RIGHT,
-	TURN_UP,
-	TURN_DOWN,
-	SPRINT,
-	LAST_CONTROL
+    MOVE_FRONT = 0,
+    MOVE_BACK,
+    MOVE_RIGHT,
+    MOVE_LEFT,
+    MOVE_UP,
+    MOVE_DOWN,
+    TURN_LEFT,
+    TURN_RIGHT,
+    TURN_UP,
+    TURN_DOWN,
+    SPRINT,
+    LAST_CONTROL
 }rlFPCameraControls;
 
 typedef struct
 {
-	// keys used to control the camera
-	int ControlsKeys[LAST_CONTROL];
+    // keys used to control the camera
+    int ControlsKeys[LAST_CONTROL];
 
-	// the speed in units/second to move 
-	// X = sidestep
-	// Y = jump/fall
-	// Z = forward
-	Vector3 MoveSpeed;
+    // the speed in units/second to move 
+    // X = sidestep
+    // Y = jump/fall
+    // Z = forward
+    Vector3 MoveSpeed;
 
-	// the speed for turning when using keys to look
-	// degrees/second
-	Vector2 TurnSpeed;
+    // the speed for turning when using keys to look
+    // degrees/second
+    Vector2 TurnSpeed;
 
-	// use the mouse for looking?
-	bool UseMouse;
+    // use the mouse for looking?
+    bool UseMouse;
 
-	// how many pixels equate out to an angle move, larger numbers mean slower, more accurate mouse
-	float MouseSensitivity;
+    // how many pixels equate out to an angle move, larger numbers mean slower, more accurate mouse
+    float MouseSensitivity;
 
-	// how far down can the camera look
-	float MinimumViewY;
+    // how far down can the camera look
+    float MinimumViewY;
 
-	// how far up can the camera look
-	float MaximumViewY;
+    // how far up can the camera look
+    float MaximumViewY;
 
-	// how fast the view should bobble as you move
-	// defaults to 0 for no bobble
-	float ViewBobbleFreq;
+    // how fast the view should bobble as you move
+    // defaults to 0 for no bobble
+    float ViewBobbleFreq;
 
-	// how high up/down will the bobble be
-	float ViewBobbleMagnatude;
+    // how high up/down will the bobble be
+    float ViewBobbleMagnatude;
 
-	// how far left and right should the view bobble
-	float ViewBobbleWaverMagnitude;
+    // how far left and right should the view bobble
+    float ViewBobbleWaverMagnitude;
 
-	// the position of the base of the camera (on the floor)
-	// note that this will not be the view position because it is offset by the eye height.
-	// this value is also not changed by the view bobble
-	Vector3 CameraPosition;
+    // the position of the base of the camera (on the floor)
+    // note that this will not be the view position because it is offset by the eye height.
+    // this value is also not changed by the view bobble
+    Vector3 CameraPosition;
 
-	// how far from the base of the camera is the player's view
-	float PlayerEyesPosition;
+    // how far from the base of the camera is the player's view
+    float PlayerEyesPosition;
 
-	// the field of view in X and Y
-	Vector2 FOV;
+    // the field of view in X and Y
+    Vector2 FOV;
 
-	// state for mouse movement
-	Vector2 PreviousMousePosition;
+    // state for mouse movement
+    Vector2 PreviousMousePosition;
 
-	// state for view movement
-	float TargetDistance;
+    // state for view movement
+    float TargetDistance;
 
-	// state for view angles
-	Vector2 ViewAngles;
+    // state for view angles
+    Vector2 ViewAngles;
 
-	// state for bobble
-	float CurrentBobble;
+    // state for bobble
+    float CurrentBobble;
 
-	// state for window focus
-	bool Focused;
+    // state for window focus
+    bool Focused;
 
-	// raylib camera for use with raylib modes.
-	Camera3D ViewCamera;
+    // raylib camera for use with raylib modes.
+    Camera3D ViewCamera;
 
-	Vector3 Forward;
-	Vector3 Right;
+    Vector3 Forward;
+    Vector3 Right;
 
-	//clipping planes
-	// note must use BeginModeFP3D and EndModeFP3D instead of BeginMode3D/EndMode3D for clipping planes to work
-	double NearPlane;
-	double FarPlane;
+    //clipping planes
+    // note must use BeginModeFP3D and EndModeFP3D instead of BeginMode3D/EndMode3D for clipping planes to work
+    double NearPlane;
+    double FarPlane;
 }rlFPCamera;
 
 // called to initialize a camera to default values
@@ -152,3 +154,6 @@ RLAPI void rlFPCameraEndMode3D();
 // ============== EDITED FUNCTIONS ================
 
 void rlFPCameraRotationUpdate(rlFPCamera* camera, Vector2 rotationAxis);
+
+
+#endif //FP_CAMERA_H

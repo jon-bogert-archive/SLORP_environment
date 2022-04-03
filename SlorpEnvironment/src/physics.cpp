@@ -1,4 +1,3 @@
-#include "pch/pch.h"
 #include "lib/physics.h"
 
 const float GRAVITY_DEFAULT = -3.f; // m/s^2

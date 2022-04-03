@@ -1,9 +1,11 @@
 #pragma once
-
-#include "pch/pch.h"
+#include <iostream>
+//Project Headers
+#include "raylib.h"
 #include "structs.h"
 #include "lib/Settings.h"
 #include "lib/physics.h"
+#include <raymath.h>
 
 extern "C"
 {

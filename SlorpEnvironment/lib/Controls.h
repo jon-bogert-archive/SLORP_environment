@@ -1,11 +1,13 @@
 #pragma once
 
 //Project Headers
-#include "pch/pch.h"
-#
+#include "raylib.h"
+#include "raymath.h"
+#include "rlFPCamera.h"
 #include "lib/Settings.h"
 #include "lib/Player.h"
-
+#include <math.h>
+#include <iostream>
 
 class Controls
 {

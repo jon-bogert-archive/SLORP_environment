@@ -1,14 +1,18 @@
+//system headers for Debug
+#include <iostream>
 
 //Project Headers
-#include "pch/pch.h"
-
+#include "raylib.h"
 #include "lib/structs.h"
 #include "lib/Settings.h"
 #include "lib/physics.h"
 #include "lib/Player.h"
 #include "lib/Controls.h"
-#include "lib/Actor.h"
-#include "lib/World.h"
+
+extern "C"
+{
+#include "lib/rlFPCamera.h"
+}
 
 using namespace std;
 bool showDebugCam = false;
@@ -35,13 +39,6 @@ int main()
 	Camera3D debugCam;
 	InitDebugCam(&debugCam);
 
-	World world(&player);
-
-	//TestCube
-	Rectangle testCollider{ 1,1,1 };
-	Actor testCube(GenMeshCube(1, 1, 1), { 5.f, 0.5f, 1.f }, &testCollider);
-	world.AddActor(&testCube);
-
 	while (!WindowShouldClose())
 	{
 		if (IsKeyPressed(KEY_F3)) { showDebugCam = !showDebugCam; } // Press F3 for 3rd Person Debug Camera
@@ -58,18 +55,14 @@ int main()
 			rlFPCameraBeginMode3D(&player.GetCamera());
 
 		DrawGrid(50, 1.0f);
-		//DrawCube({ 5.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
-		for (Actor* actor : world.GetActorList())
-		{
-			//Draw Mesh
-		}
-
+		DrawCube({ 0.f, 0.5f, 0.f }, 1.f, 1.f, 1.f, RED);
 		player.Draw();
 		DrawGrid(10, 1.0f);
 
 		rlFPCameraEndMode3D();
 		EndDrawing();
 	}
+
 	return 0;
 }
 

@@ -1,9 +1,9 @@
 #pragma once
 
 //Project Headers
-#include "pch/pch.h"
+#include "raylib.h"
 #include "lib/structs.h"
-
+#include <string>
 
 using namespace std;
 
